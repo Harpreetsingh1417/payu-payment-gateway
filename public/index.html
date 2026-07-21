@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PayU Payment Gateway</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="background"></div>
+
+    <div class="payment-container">
+
+        <div class="payment-card">
+
+            <div class="logo">
+
+                <h1>PayU Payment</h1>
+
+                <p>Secure Online Payment</p>
+
+            </div>
+
+            <form id="paymentForm">
+
+                <div class="input-group">
+
+                    <label for="name">Full Name</label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="example@gmail.com"
+                        required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="phone">Phone Number</label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        maxlength="10"
+                        placeholder="9876543210"
+                        required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="amount">Payment Amount</label>
+
+                    <input
+                        type="number"
+                        id="amount"
+                        name="amount"
+                        min="1"
+                        placeholder="Enter amount"
+                        required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="currency">Currency</label>
+
+                    <select
+                        id="currency"
+                        name="currency">
+
+                        <option value="INR">Indian Rupee (INR)</option>
+
+                        <option value="USD">US Dollar (USD)</option>
+
+                    </select>
+
+                </div>
+
+                <button
+                    type="submit"
+                    id="payButton">
+
+                    Pay Securely
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
