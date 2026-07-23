@@ -21,18 +21,19 @@ paymentForm.addEventListener("submit", async (event) => {
     try {
 
         const response = await fetch(
-            "https://payu-payment-backend.onrender.com/payment",
-            {
-                method: "POST",
+    "https://payu-payment-backend.onrender.com/payment",
+    {
+        method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+        headers: {
+            "Content-Type": "application/json"
+        },
 
-                body: JSON.stringify(paymentData)
-            }
-        );
+        body: JSON.stringify(paymentData)
+    }
+);
 
+     
         const result = await response.json();
 
         if (!result.success) {
