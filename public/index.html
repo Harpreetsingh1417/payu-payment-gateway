@@ -5,42 +5,67 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>PayU Payment Gateway</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
 
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
 </head>
+
 
 <body>
 
     <div class="background"></div>
 
+
     <div class="payment-container">
 
         <div class="payment-card">
+
+
+            <!-- Logo / Heading -->
 
             <div class="logo">
 
                 <h1>PayU Payment</h1>
 
-                <p>Secure Online Payment</p>
+                <p>
+                    Secure Online Payment
+                </p>
 
             </div>
 
+
+            <!-- Payment Form -->
+
             <form id="paymentForm">
+
+
+                <!-- Full Name -->
 
                 <div class="input-group">
 
-                    <label for="name">Full Name</label>
+                    <label for="name">
+                        Full Name
+                    </label>
 
                     <input
                         type="text"
@@ -51,9 +76,14 @@
 
                 </div>
 
+
+                <!-- Email -->
+
                 <div class="input-group">
 
-                    <label for="email">Email Address</label>
+                    <label for="email">
+                        Email Address
+                    </label>
 
                     <input
                         type="email"
@@ -64,9 +94,14 @@
 
                 </div>
 
+
+                <!-- Phone -->
+
                 <div class="input-group">
 
-                    <label for="phone">Phone Number</label>
+                    <label for="phone">
+                        Phone Number
+                    </label>
 
                     <input
                         type="tel"
@@ -78,35 +113,73 @@
 
                 </div>
 
+
+                <!-- Payment Amount -->
+
                 <div class="input-group">
 
-                    <label for="amount">Payment Amount</label>
+                    <label for="amount">
+                        Payment Amount
+                    </label>
 
-                    <input
-                        type="number"
-                        id="amount"
-                        name="amount"
-                        min="1"
-                        placeholder="Enter amount"
-                        required>
+
+                    <div class="amount-wrapper">
+
+                        <!-- Currency Symbol -->
+
+                        <span id="currencySymbol">
+                            ₹
+                        </span>
+
+
+                        <input
+                            type="number"
+                            id="amount"
+                            name="amount"
+                            min="1"
+                            step="0.01"
+                            placeholder="Enter amount"
+                            required>
+
+                    </div>
 
                 </div>
 
+
+                <!-- Currency -->
+
                 <div class="input-group">
 
-                    <label for="currency">Currency</label>
+                    <label for="currency">
+                        Currency
+                    </label>
+
 
                     <select
                         id="currency"
                         name="currency">
 
-                        <option value="INR">Indian Rupee (INR)</option>
 
-                        <option value="USD">US Dollar (USD)</option>
+                        <option value="INR">
+
+                            Indian Rupee (INR)
+
+                        </option>
+
+
+                        <option value="USD">
+
+                            US Dollar (USD)
+
+                        </option>
+
 
                     </select>
 
                 </div>
+
+
+                <!-- Pay Button -->
 
                 <button
                     type="submit"
@@ -116,13 +189,18 @@
 
                 </button>
 
+
             </form>
 
         </div>
 
     </div>
 
+
+    <!-- JavaScript -->
+
     <script src="script.js"></script>
+
 
 </body>
 

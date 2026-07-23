@@ -3,17 +3,13 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const path = require("path");
-const cors = require("cors");
 const paymentRoute = require("./routes/payment");
 
 // Load environment variables
 dotenv.config();
+
 // Create Express app
 const app = express();
-
-app.use(cors({
-    origin: "https://payu-payment-project.web.app"
-}));
 
 // Port
 const PORT = process.env.PORT || 3000;
@@ -24,6 +20,8 @@ app.use(bodyParser.json());
 
 // Serve static files from the public folder
 app.use(express.static(path.join(__dirname, "public")));
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
 app.use("/payment", paymentRoute);
 
 

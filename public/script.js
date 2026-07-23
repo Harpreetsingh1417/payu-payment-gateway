@@ -1,83 +1,399 @@
-const paymentForm = document.getElementById("paymentForm");
+// ============================================
+// GET HTML ELEMENTS
+// ============================================
 
-paymentForm.addEventListener("submit", async (event) => {
 
-    event.preventDefault();
+// Payment Form
 
-    const paymentData = {
+const paymentForm =
+    document.getElementById(
+        "paymentForm"
+    );
 
-        name: document.getElementById("name").value.trim(),
 
-        email: document.getElementById("email").value.trim(),
+// Currency Dropdown
 
-        phone: document.getElementById("phone").value.trim(),
+const currencySelect =
+    document.getElementById(
+        "currency"
+    );
 
-        amount: document.getElementById("amount").value.trim(),
 
-        currency: document.getElementById("currency").value
+// Currency Symbol
 
-    };
+const currencySymbol =
+    document.getElementById(
+        "currencySymbol"
+    );
 
-    try {
 
-        const response = await fetch(
-    "https://payu-payment-backend.onrender.com/payment",
-    {
-        method: "POST",
+// Pay Button
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+const payButton =
+    document.getElementById(
+        "payButton"
+    );
 
-        body: JSON.stringify(paymentData)
+
+
+// ============================================
+// CURRENCY SYMBOL CHANGE
+// ============================================
+
+
+currencySelect.addEventListener(
+    "change",
+    () => {
+
+
+        // Get selected currency
+
+        const selectedCurrency =
+            currencySelect.value;
+
+
+        // If USD is selected
+
+        if (
+            selectedCurrency === "USD"
+        ) {
+
+            currencySymbol.textContent =
+                "$";
+
+        }
+
+
+        // If INR is selected
+
+        else {
+
+            currencySymbol.textContent =
+                "₹";
+
+        }
+
     }
 );
 
-     
-        const result = await response.json();
 
-        if (!result.success) {
 
-            alert(result.message);
+// ============================================
+// PAYMENT FORM SUBMISSION
+// ============================================
 
-            return;
+
+paymentForm.addEventListener(
+    "submit",
+    async (event) => {
+
+
+        // Stop normal form submission
+
+        event.preventDefault();
+
+
+        // Disable button
+        // to prevent multiple clicks
+
+        payButton.disabled =
+            true;
+
+
+        payButton.textContent =
+            "Processing...";
+
+
+
+        // ============================================
+        // COLLECT FORM DATA
+        // ============================================
+
+
+        const paymentData = {
+
+
+            // Customer Name
+
+            name:
+                document
+                    .getElementById("name")
+                    .value
+                    .trim(),
+
+
+            // Customer Email
+
+            email:
+                document
+                    .getElementById("email")
+                    .value
+                    .trim(),
+
+
+            // Customer Phone
+
+            phone:
+                document
+                    .getElementById("phone")
+                    .value
+                    .trim(),
+
+
+            // Payment Amount
+
+            amount:
+                document
+                    .getElementById("amount")
+                    .value
+                    .trim(),
+
+
+            // Selected Currency
+
+            currency:
+                document
+                    .getElementById("currency")
+                    .value
+
+        };
+
+
+
+        // ============================================
+        // SEND DATA TO NODE.JS BACKEND
+        // ============================================
+
+
+        try {
+
+
+            const response =
+                await fetch(
+                    "/payment",
+                    {
+
+                        method: "POST",
+
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+
+                        body:
+                            JSON.stringify(
+                                paymentData
+                            )
+
+                    }
+                );
+
+
+
+            // Convert backend response
+            // into JavaScript object
+
+            const result =
+                await response.json();
+
+
+
+            // ============================================
+            // CHECK BACKEND RESPONSE
+            // ============================================
+
+
+            if (
+                !result.success
+            ) {
+
+                alert(
+                    result.message
+                );
+
+
+                // Restore button
+
+                payButton.disabled =
+                    false;
+
+
+                payButton.textContent =
+                    "Pay Securely";
+
+
+                return;
+
+            }
+
+
+
+            // ============================================
+            // DISPLAY CONVERSION INFORMATION
+            // ============================================
+
+
+            console.log(
+                "Original Amount:",
+                result.originalAmount,
+                result.originalCurrency
+            );
+
+
+            console.log(
+                "Converted INR Amount:",
+                result.convertedAmount,
+                "INR"
+            );
+
+
+
+            // ============================================
+            // CREATE PAYU FORM
+            // ============================================
+
+
+            const payuForm =
+                document.createElement(
+                    "form"
+                );
+
+
+
+            // PayU requires POST
+
+            payuForm.method =
+                "POST";
+
+
+
+            // Get PayU URL
+
+            payuForm.action =
+                result
+                    .paymentData
+                    .action;
+
+
+
+            // ============================================
+            // ADD PAYU PAYMENT FIELDS
+            // ============================================
+
+
+            for (
+                const key
+                in result.paymentData
+            ) {
+
+
+                // Don't create an input
+                // for the action URL
+
+                if (
+                    key === "action"
+                ) {
+
+                    continue;
+
+                }
+
+
+
+                // Create hidden input
+
+                const input =
+                    document.createElement(
+                        "input"
+                    );
+
+
+
+                // Hidden input
+
+                input.type =
+                    "hidden";
+
+
+
+                // PayU field name
+
+                input.name =
+                    key;
+
+
+
+                // PayU field value
+
+                input.value =
+                    result
+                        .paymentData[key];
+
+
+
+                // Add input to form
+
+                payuForm.appendChild(
+                    input
+                );
+
+            }
+
+
+
+            // ============================================
+            // SUBMIT PAYMENT TO PAYU
+            // ============================================
+
+
+            // Add form to page
+
+            document.body.appendChild(
+                payuForm
+            );
+
+
+            // Submit form automatically
+
+            payuForm.submit();
+
 
         }
 
-        const payuForm = document.createElement("form");
 
-        payuForm.method = "POST";
+        // ============================================
+        // ERROR HANDLING
+        // ============================================
 
-        payuForm.action = result.paymentData.action;
 
-        for (const key in result.paymentData) {
+        catch (error) {
 
-            if (key === "action") continue;
 
-            const input = document.createElement("input");
+            console.error(
+                "Payment error:",
+                error
+            );
 
-            input.type = "hidden";
 
-            input.name = key;
+            alert(
+                "Unable to connect to the payment server."
+            );
 
-            input.value = result.paymentData[key];
 
-            payuForm.appendChild(input);
+            // Restore button
+
+            payButton.disabled =
+                false;
+
+
+            payButton.textContent =
+                "Pay Securely";
 
         }
-
-        document.body.appendChild(payuForm);
-
-        payuForm.submit();
-
-    } catch (error) {
-
-        console.error("Payment Error:", error);
-
-        alert(
-            "Unable to connect to the payment server. Please try again."
-        );
 
     }
-
-});
+);

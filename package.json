@@ -16,5 +16,14 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "uuid": "^14.0.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Harpreetsingh1417/payu-payment-gateway.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Harpreetsingh1417/payu-payment-gateway/issues"
+  },
+  "homepage": "https://github.com/Harpreetsingh1417/payu-payment-gateway#readme"
 }

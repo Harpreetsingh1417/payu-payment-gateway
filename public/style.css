@@ -1,197 +1,347 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
+* {
 
-body{
+    margin: 0;
 
-    min-height:100vh;
+    padding: 0;
 
-    display:flex;
+    box-sizing: border-box;
 
-    justify-content:center;
-
-    align-items:center;
-
-    background:linear-gradient(135deg,#0f172a,#1e293b,#334155);
-
-    overflow:hidden;
+    font-family: 'Poppins', sans-serif;
 
 }
 
-.background{
 
-    position:fixed;
+body {
 
-    width:100%;
+    min-height: 100vh;
 
-    height:100%;
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
 
     background:
-    radial-gradient(circle at top left,#2563eb55,transparent 40%),
-    radial-gradient(circle at bottom right,#14b8a655,transparent 40%);
-}
+        linear-gradient(
+            135deg,
+            #0f172a,
+            #1e293b,
+            #334155
+        );
 
-.payment-container{
-
-    width:100%;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    padding:30px;
+    overflow: hidden;
 
 }
 
-.payment-card{
 
-    position:relative;
+.background {
 
-    width:450px;
+    position: fixed;
 
-    background:rgba(255,255,255,.08);
+    width: 100%;
 
-    backdrop-filter:blur(18px);
+    height: 100%;
 
-    border:1px solid rgba(255,255,255,.15);
+    background:
+        radial-gradient(
+            circle at top left,
+            #2563eb55,
+            transparent 40%
+        ),
 
-    border-radius:20px;
-
-    padding:35px;
-
-    box-shadow:0 20px 40px rgba(0,0,0,.35);
-
-}
-
-.logo{
-
-    text-align:center;
-
-    margin-bottom:25px;
+        radial-gradient(
+            circle at bottom right,
+            #14b8a655,
+            transparent 40%
+        );
 
 }
 
-.logo h1{
 
-    color:white;
+/* Main Container */
 
-    font-size:30px;
+.payment-container {
 
-}
+    width: 100%;
 
-.logo p{
+    display: flex;
 
-    color:#d1d5db;
+    justify-content: center;
 
-    margin-top:8px;
+    align-items: center;
 
-}
-
-.input-group{
-
-    display:flex;
-
-    flex-direction:column;
-
-    margin-bottom:18px;
+    padding: 30px;
 
 }
 
-.input-group label{
 
-    color:white;
+/* Payment Card */
 
-    margin-bottom:8px;
+.payment-card {
 
-    font-size:15px;
+    position: relative;
+
+    width: 450px;
+
+    background:
+        rgba(255, 255, 255, 0.08);
+
+    backdrop-filter:
+        blur(18px);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 20px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.35);
 
 }
+
+
+/* Logo */
+
+.logo {
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+}
+
+
+.logo h1 {
+
+    color: white;
+
+    font-size: 30px;
+
+}
+
+
+.logo p {
+
+    color: #d1d5db;
+
+    margin-top: 8px;
+
+}
+
+
+/* Input Group */
+
+.input-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    margin-bottom: 18px;
+
+}
+
+
+/* Labels */
+
+.input-group label {
+
+    color: white;
+
+    margin-bottom: 8px;
+
+    font-size: 15px;
+
+}
+
+
+/* Normal Inputs and Select */
 
 .input-group input,
-.input-group select{
+.input-group select {
 
-    padding:14px;
+    padding: 14px;
 
-    border:none;
+    border: none;
 
-    outline:none;
+    outline: none;
 
-    border-radius:10px;
+    border-radius: 10px;
 
-    background:white;
+    background: white;
 
-    font-size:15px;
+    font-size: 15px;
 
-    transition:.3s;
+    transition: 0.3s;
 
 }
+
+
+/* Focus Effect */
 
 .input-group input:focus,
-.input-group select:focus{
+.input-group select:focus {
 
-    transform:scale(1.02);
+    transform: scale(1.02);
 
-    box-shadow:0 0 12px #3b82f6;
-
-}
-
-button{
-
-    width:100%;
-
-    padding:15px;
-
-    border:none;
-
-    border-radius:10px;
-
-    background:#2563eb;
-
-    color:white;
-
-    font-size:17px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.3s;
+    box-shadow:
+        0 0 12px #3b82f6;
 
 }
 
-button:hover{
 
-    background:#1d4ed8;
+/* ================================= */
+/* Amount Input With Currency Symbol */
+/* ================================= */
 
-    transform:translateY(-2px);
+.amount-wrapper {
 
-}
+    display: flex;
 
-button:active{
+    align-items: center;
 
-    transform:scale(.98);
+    background: white;
 
-}
+    border-radius: 10px;
 
-@media(max-width:500px){
+    overflow: hidden;
 
-.payment-card{
-
-width:100%;
-
-padding:25px;
+    transition: 0.3s;
 
 }
 
-.logo h1{
 
-font-size:24px;
+/* Currency Symbol */
+
+.amount-wrapper span {
+
+    padding:
+        14px
+        0
+        14px
+        14px;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    color: #2563eb;
+
+    min-width: 35px;
 
 }
+
+
+/* Amount Input */
+
+.amount-wrapper input {
+
+    flex: 1;
+
+    border: none;
+
+    outline: none;
+
+    padding: 14px;
+
+    font-size: 15px;
+
+    background: transparent;
+
+}
+
+
+/* Amount Input Focus */
+
+.amount-wrapper:focus-within {
+
+    transform: scale(1.02);
+
+    box-shadow:
+        0 0 12px #3b82f6;
+
+}
+
+
+/* Remove extra focus effect */
+
+.amount-wrapper input:focus {
+
+    transform: none;
+
+    box-shadow: none;
+
+}
+
+
+/* Pay Button */
+
+button {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+
+/* Button Hover */
+
+button:hover {
+
+    background: #1d4ed8;
+
+    transform: translateY(-2px);
+
+}
+
+
+/* Button Click */
+
+button:active {
+
+    transform: scale(0.98);
+
+}
+
+
+/* Mobile Responsive */
+
+@media (max-width: 500px) {
+
+
+    .payment-card {
+
+        width: 100%;
+
+        padding: 25px;
+
+    }
+
+
+    .logo h1 {
+
+        font-size: 24px;
+
+    }
+
 
 }
