@@ -1,0 +1,45 @@
+function fourWordAnalysis() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sourceSheet = ss.getActiveSheet();
+
+  const data = sourceSheet.getDataRange().getValues();
+
+  if (data.length <= 1) {
+    SpreadsheetApp.getUi().alert("No data found.");
+    return;
+  }
+
+  // Delete old output sheet
+  const oldSheet = ss.getSheetByName("4 Word Analysis");
+  if (oldSheet) {
+    ss.deleteSheet(oldSheet);
+  }
+
+  // Create new output sheet
+  const outputSheet = ss.insertSheet("4 Word Analysis");
+
+  const output = [];
+  output.push(data[0]); // Header
+
+  // Process data
+  for (let i = 1; i < data.length; i++) {
+    const searchItem = String(data[i][0]).trim();
+
+    if (!searchItem) continue;
+
+    const wordCount = searchItem.split(/\s+/).length;
+
+    if (wordCount === 4) {
+      output.push(data[i]);
+    }
+  }
+
+  // Write everything at once
+  outputSheet
+    .getRange(1, 1, output.length, output[0].length)
+    .setValues(output);
+
+  SpreadsheetApp.flush();
+
+  Logger.log("Completed");
+}                                                                                                                                                           simple code

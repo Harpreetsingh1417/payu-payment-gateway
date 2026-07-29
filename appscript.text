@@ -1,0 +1,320 @@
+function analyzeData() {
+
+  // Get the spreadsheet
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  // Get the data sheet
+  const sheet = ss.getSheetByName("Raw Data");
+
+  // Read all data
+  const data = sheet.getDataRange().getValues();
+
+  // First row = headings
+  const headers = data[0];
+
+  // Find columns by their heading
+  const searchCol = headers.indexOf("Search Items");
+  const clicksCol = headers.indexOf("Clicks");
+  const timeCol = headers.indexOf("Time Per Click (sec)");
+
+  // Store results
+  const results = {};
+
+  // Start from row 2
+  for (let i = 1; i < data.length; i++) {
+
+    const search = String(data[i][searchCol]).trim();
+
+    // Split Search Items into words
+    const words = search.split(/\s+/);
+
+    // Keep only exactly 2 words
+    if (words.length !== 2) {
+      continue;
+    }
+
+    const clicks = Number(data[i][clicksCol]);
+    const time = Number(data[i][timeCol]);
+
+    // If phrase is seen for first time
+    if (!results[search]) {
+      results[search] = {
+        firstWord: words[0],
+        secondWord: words[1],
+        totalClicks: 0,
+        totalTime: 0,
+        count: 0
+      };
+    }
+
+    // Add values
+    results[search].totalClicks += clicks;
+    results[search].totalTime += time;
+    results[search].count++;
+  }
+
+
+  // Create output sheet
+  let output = ss.getSheetByName("Analysis");
+
+  if (!output) {
+    output = ss.insertSheet("Analysis");
+  }
+
+  // Clear old results
+  output.clear();
+
+
+  // Headings
+  output.getRange("A1:H1").setValues([[
+    "Two Word Search",
+    "First Word",
+    "Second Word",
+    "Occurrences",
+    "Total Clicks",
+    "Average Time Per Click",
+    "Engagement Score",
+    "Rank"
+  ]]);
+
+
+  // Convert results into rows
+  const outputData = [];
+
+  for (const search in results) {
+
+    const item = results[search];
+
+    const averageTime =
+      item.totalTime / item.count;
+
+    const engagement =
+      item.totalClicks * averageTime;
+
+    outputData.push([
+      search,
+      item.firstWord,
+      item.secondWord,
+      item.count,
+      item.totalClicks,
+      averageTime,
+      engagement,
+      0
+    ]);
+  }
+
+
+  // Sort by engagement score
+  outputData.sort(function(a, b) {
+    return b[6] - a[6];
+  });
+
+
+  // Add ranking
+  for (let i = 0; i < outputData.length; i++) {
+    outputData[i][7] = i + 1;
+  }
+
+
+  // Write results
+  if (outputData.length > 0) {
+
+    output
+      .getRange(
+        2,
+        1,
+        outputData.length,
+        8
+      )
+      .setValues(outputData);
+  }
+
+
+  // Format headings
+  output
+    .getRange("A1:H1")
+    .setFontWeight("bold");
+
+  // Resize columns
+  output.autoResizeColumns(1, 8);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+two word Analysis
+function analyzeTwoWordSearchItems() {
+
+  // Get the current spreadsheet
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+
+  // Get the Raw Data sheet
+  const sourceSheet = spreadsheet.getSheetByName("Raw Data");
+
+  // Check if Raw Data exists
+  if (!sourceSheet) {
+    throw new Error("Raw Data sheet was not found.");
+  }
+
+  Logger.log("Raw Data sheet found.");
+
+
+  // Read all data
+  const data = sourceSheet.getDataRange().getValues();
+
+  Logger.log("Total rows: " + data.length);
+
+
+  // Get column headings
+  const headers = data[0];
+
+  Logger.log("Headers: " + headers.join(", "));
+
+
+  // Find Search Items column
+  const searchItemsColumn = headers.indexOf("Search Items");
+
+  if (searchItemsColumn === -1) {
+    throw new Error("Search Items column was not found.");
+  }
+
+  Logger.log(
+    "Search Items column found at index: " +
+    searchItemsColumn
+  );
+
+
+  // Array for two-word results
+  const results = [];
+
+
+  // Process each row
+  for (let i = 1; i < data.length; i++) {
+
+    // Get Search Items value
+    const searchItem =
+      String(data[i][searchItemsColumn]).trim();
+
+    // Skip empty values
+    if (searchItem === "") {
+      continue;
+    }
+
+    // Split into words
+    const words =
+      searchItem.split(/\s+/);
+
+
+    // Keep only exactly two words
+    if (words.length === 2) {
+
+      results.push([
+        i + 1,
+        searchItem,
+        words[0],
+        words[1]
+      ]);
+    }
+  }
+
+
+  Logger.log(
+    "Two-word items found: " +
+    results.length
+  );
+
+
+  // Get the result sheet
+  const resultSheet =
+    spreadsheet.getSheetByName("Two Word Analysis");
+
+
+  // Clear old results
+  resultSheet.clear();
+
+
+  // Add headings
+  resultSheet.getRange("A1:D1").setValues([
+    [
+      "Original Row",
+      "Two Word Search",
+      "First Word",
+      "Second Word"
+    ]
+  ]);
+
+
+  // Add results
+  if (results.length > 0) {
+
+    resultSheet
+      .getRange(
+        2,
+        1,
+        results.length,
+        4
+      )
+      .setValues(results);
+
+  }
+
+
+  // Format headings
+  resultSheet
+    .getRange("A1:D1")
+    .setFontWeight("bold");
+
+
+  // Resize columns
+  resultSheet.autoResizeColumns(1, 4);
+
+
+  Logger.log(
+    "Analysis completed successfully."
+  );
+}
