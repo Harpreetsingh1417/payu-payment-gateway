@@ -42,4 +42,165 @@ function fourWordAnalysis() {
   SpreadsheetApp.flush();
 
   Logger.log("Completed");
-}                                                                                                                                                           simple code
+}                  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function analyseKeywordData() {
+
+  // Open the active spreadsheet
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  // Read the active sheet
+  const sheet = ss.getActiveSheet();
+
+  // Read all data
+  const data = sheet.getDataRange().getValues();
+
+  // Create output array
+  let output = [];
+
+  // Copy header row
+  let header = data[0];
+
+  // Add new columns
+  header.push(
+    "Word Count",
+    "New CPC (+10%)",
+    "Traffic Score",
+    "High Volume",
+    "Engaged User"
+  );
+
+  output.push(header);
+
+  // Loop through every row
+  for (let i = 1; i < data.length; i++) {
+
+    let row = data[i];
+
+    // ------------------------
+    // Read column values
+    // ------------------------
+
+    let searchItem = row[0];
+    let searchVolume = row[1];
+    let cpc = row[2];
+    let ctr = row[3];
+    let avgTime = row[4];
+
+    // ------------------------
+    // Calculations
+    // ------------------------
+
+    // Count words
+    let wordCount = searchItem.toString().trim().split(/\s+/).length;
+
+    // Increase CPC by 10%
+    let newCPC = (cpc * 1.10).toFixed(2);
+
+    // Traffic Score
+    let trafficScore = searchVolume * ctr;
+
+    // High Volume?
+    let highVolume = searchVolume > 10000 ? "YES" : "NO";
+
+    // Engaged User?
+    let engaged = avgTime > 120 ? "YES" : "NO";
+
+    // Add new values
+    row.push(
+      wordCount,
+      Number(newCPC),
+      trafficScore,
+      highVolume,
+      engaged
+    );
+
+    output.push(row);
+  }
+
+  // Delete old report if it exists
+  let oldSheet = ss.getSheetByName("Analysis Report");
+
+  if (oldSheet) {
+    ss.deleteSheet(oldSheet);
+  }
+
+  // Create new report sheet
+  let report = ss.insertSheet("Analysis Report");
+
+  // Write all data at once
+  report
+    .getRange(1, 1, output.length, output[0].length)
+    .setValues(output);
+
+  SpreadsheetApp.getUi().alert("Analysis Completed");
+
+}                                                                                                                                         simple code
