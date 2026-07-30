@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Two Word CSV Analyzer</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Two Word CSV Analyzer</h1>
+
+        <p class="description">
+            Upload a CSV file and find all rows where
+            <strong>Search Items</strong> contains exactly two words.
+        </p>
+
+
+        <!-- Upload Form -->
+
+        <form method="POST"
+              enctype="multipart/form-data">
+
+            <label for="csv_file">
+                Select CSV File
+            </label>
+
+            <input
+                type="file"
+                id="csv_file"
+                name="csv_file"
+                accept=".csv"
+                required
+            >
+
+            <button type="submit">
+                Analyze CSV
+            </button>
+
+        </form>
+
+
+        <!-- Error Message -->
+
+        {% if error %}
+
+            <div class="error">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <!-- Results -->
+
+        {% if result is not none %}
+
+            <div class="summary">
+
+                Rows with exactly two words:
+
+                <strong>
+                    {{ result|length }}
+                </strong>
+
+            </div>
+
+
+            {% if result|length > 0 %}
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                {% for column in columns %}
+
+                                    <th>
+                                        {{ column }}
+                                    </th>
+
+                                {% endfor %}
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for row in result %}
+
+                                <tr>
+
+                                    {% for column in columns %}
+
+                                        <td>
+                                            {{ row[column] }}
+                                        </td>
+
+                                    {% endfor %}
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <div class="empty">
+
+                    No rows were found with exactly two
+                    words in the "Search Items" column.
+
+                </div>
+
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
