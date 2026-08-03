@@ -1,0 +1,110 @@
+function twoWordAnalysis() {
+
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getActiveSheet();
+  var data = sheet.getDataRange().getValues();
+
+  if (data.length < 2) return;
+
+  var headers = data[0];
+
+  var searchCol = headers.indexOf("Search term");
+  var imprCol = headers.indexOf("Impr.");
+  var clicksCol = headers.indexOf("Clicks");
+  var costCol = headers.indexOf("Cost");
+  var convCol = headers.indexOf("Conversions");
+  var valueCol = headers.indexOf("Conv. value");
+
+  if (
+    searchCol == -1 ||
+    imprCol == -1 ||
+    clicksCol == -1 ||
+    costCol == -1 ||
+    convCol == -1 ||
+    valueCol == -1
+  ) {
+    SpreadsheetApp.getUi().alert("Required columns are missing.");
+    return;
+  }
+
+  var result = {};
+
+  for (var i = 1; i < data.length; i++) {
+
+    var term = String(data[i][searchCol] || "")
+      .toLowerCase()
+      .trim();
+
+    if (!term) continue;
+
+    // Convert every non-letter/number into a space
+    term = term.replace(/[^a-z0-9]+/g, " ").trim();
+
+    var words = term.split(/\s+/).filter(String);
+
+    if (words.length < 2) continue;
+
+    // Prevent duplicate adjacent phrases from the SAME row
+    var seen = {};
+
+    for (var j = 0; j < words.length - 1; j++) {
+
+      var phrase = words[j] + " " + words[j + 1];
+
+      if (seen[phrase]) continue;
+      seen[phrase] = true;
+
+      if (!result[phrase]) {
+
+        result[phrase] = {
+          impr: 0,
+          clicks: 0,
+          conv: 0,
+          cost: 0,
+          value: 0
+        };
+
+      }
+
+      result[phrase].impr += Number(data[i][imprCol]) || 0;
+      result[phrase].clicks += Number(data[i][clicksCol]) || 0;
+      result[phrase].conv += Number(data[i][convCol]) || 0;
+      result[phrase].cost += Number(data[i][costCol]) || 0;
+      result[phrase].value += Number(data[i][valueCol]) || 0;
+    }
+  }
+
+  var output = [[
+    "Search Term",
+    "Impressions",
+    "Clicks",
+    "Conversions",
+    "Cost",
+    "Conversion Value"
+  ]];
+
+  for (var phrase in result) {
+
+    output.push([
+      phrase,
+      result[phrase].impr,
+      result[phrase].clicks,
+      result[phrase].conv,
+      result[phrase].cost,
+      result[phrase].value
+    ]);
+
+  }
+
+  var resultSheet = ss.getSheetByName("Resultant sheet");
+
+  if (!resultSheet) {
+    resultSheet = ss.insertSheet("Resultant sheet");
+  } else {
+    resultSheet.clear();
+  }
+
+  resultSheet
+    .getRange(1,1,output.length,output[0].length)
+    .setValues(output);
+}
