@@ -1,0 +1,159 @@
+import pandas as pd
+
+df = pd.read_csv("data.csv")
+
+allowed_categories = ["Electronics", "Clothing", "Food", "Furniture"]
+
+def validate_row(row):
+    errors = []
+
+    try:
+        quantity = int(row["quantity"])
+        if quantity < 0:
+            errors.append("Quantity cannot be negative")
+    except (ValueError, TypeError):
+        errors.append("Quantity must be an integer")
+
+    try:
+        price = float(row["price"])
+        if price <= 0:
+            errors.append("Price must be positive")
+    except (ValueError, TypeError):
+        errors.append("Price must be a number")
+
+    category = str(row["category"]).strip()
+    if category not in allowed_categories:
+        errors.append("Invalid category")
+
+    if len(errors) == 0:
+        return pd.Series({"Flag": "VALID", "Reason": "—"})
+    else:
+        return pd.Series({"Flag": "INVALID", "Reason": "; ".join(errors)})
+
+result = df.apply(validate_row, axis=1)
+
+df["Flag"] = result["Flag"]
+df["Reason"] = result["Reason"]
+
+df.to_csv("validated_data.csv", index=False)
+print("Done")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>iPhone 15 - Product Page</title>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "iPhone 15",
+      "image": "https://example.com/iphone15.jpg",
+      "description": "Apple iPhone 15",
+      "offers": {
+        "@type": "Offer",
+        "price": "60000",
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock"
+      }
+    }
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        .product {
+            max-width: 400px;
+        }
+
+        .product img {
+            width: 300px;
+            height: auto;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="product">
+        <h1>iPhone 15</h1>
+
+        <img
+            src="https://example.com/iphone15.jpg"
+            alt="iPhone 15"
+        >
+
+        <p>Apple iPhone 15</p>
+
+        <p class="price">₹60,000</p>
+
+        <p>Availability: In Stock</p>
+
+        <button id="addToCart" type="button">
+            Add to Cart
+        </button>
+
+        <p id="cartMessage" aria-live="polite"></p>
+    </main>
+
+    <!-- Page JavaScript -->
+    <script>
+        const addToCartButton = document.getElementById("addToCart");
+        const cartMessage = document.getElementById("cartMessage");
+
+        addToCartButton.addEventListener("click", () => {
+            cartMessage.textContent = "iPhone 15 added to cart!";
+        });
+    </script>
+
+</body>
+</html>
+```
