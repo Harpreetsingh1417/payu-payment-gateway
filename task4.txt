@@ -62,15 +62,19 @@ Inside head tag copy it
 {
   "@context": "https://schema.org",
   "@type": "Article",
+
   "headline": "10 Tips to Improve Your Website SEO",
+
   "description": "Learn 10 practical tips to improve your website SEO and increase organic traffic.",
-  "image": [
-    "https://images.unsplash.com/photo-1460925895917-afdab827c52f"
-  ],
+
+  "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+
   "author": {
     "@type": "Person",
-    "name": "John Doe"
+    "name": "John Doe",
+    "url": "https://example.com/author/john-doe"
   },
+
   "publisher": {
     "@type": "Organization",
     "name": "My Blog",
@@ -79,8 +83,11 @@ Inside head tag copy it
       "url": "https://example.com/logo.png"
     }
   },
-  "datePublished": "2026-08-12",
-  "dateModified": "2026-08-12",
+
+  "datePublished": "2026-08-12T00:00:00+05:30",
+
+  "dateModified": "2026-08-12T00:00:00+05:30",
+
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "https://example.com/blog/seo-tips"
