@@ -1,119 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSV File Uploader</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+function onFormSubmit(e) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let logSheet = ss.getSheetByName('Log');
+  
+  if (!logSheet) {
+    logSheet = ss.insertSheet('Log');
+    logSheet.appendRow(['Serial No.', 'Timestamp', 'Name', 'Country', 'State', 'Status']);
+  }
+  
+  const responses = e.values || []; 
+  const name = responses[1] ? responses[1].trim() : '';
+  const country = responses[2] ? responses[2].trim() : '';
+  const state = responses[3] ? responses[3].trim() : '';
 
-<body>
+  // Basic Validation: check if any required field is empty
+  const isValid = name !== '' && country !== '' && state !== '';
+  const status = isValid ? 'Valid' : 'FLAGGED: Missing Data';
 
-    <div class="container">
-
-        <h1>CSV File Uploader</h1>
-        <p class="description">
-            Upload a CSV file to preview its first 20 rows.
-        </p>
-
-        <div class="upload-box">
-            <input type="file" id="csvFile" accept=".csv">
-            <button id="uploadBtn">Upload CSV</button>
-        </div>
-
-        <div id="message"></div>
-
-        <div id="tableContainer"></div>
-
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const fileInput = document.getElementById("csvFile");
-const uploadBtn = document.getElementById("uploadBtn");
-const message = document.getElementById("message");
-const tableContainer = document.getElementById("tableContainer");
-
-uploadBtn.onclick = () => {
-    const file = fileInput.files[0];
-
-    if (!file) return showError("Please select a file first.");
-    if (!file.name.toLowerCase().endsWith(".csv"))
-        return showError("Please upload a CSV file.");
-
-    const reader = new FileReader();
-
-    reader.onload = e => {
-        const rows = parseCSV(e.target.result);
-
-        if (!rows.length) return showError("The CSV file is empty.");
-
-        message.textContent = "CSV uploaded successfully!";
-        message.className = "success";
-
-        renderTable(rows.slice(0, 20));
-    };
-
-    reader.onerror = () => showError("Unable to read the file.");
-    reader.readAsText(file);
-};
-
-
-// Manual CSV parser
- function parseCSV(text) {
-    const rows = [];
-
-    const lines = text.split("\n");
-
-    for (let line of lines) {
-        line = line.trim();
-
-        if (line === "") continue;
-
-        const row = line.split(",");
-        rows.push(row);
-    }
-
-    return rows;
-}
-
-// Create table
-function renderTable(rows) {
-    tableContainer.innerHTML = `
-        <table>
-            <thead>
-                <tr>${rows[0].map(h => `<th>${h}</th>`).join("")}</tr>
-            </thead>
-            <tbody>
-                ${rows.slice(1).map(row =>
-                    `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`
-                ).join("")}
-            </tbody>
-        </table>`;
+  const nextSerialNo = logSheet.getLastRow(); 
+  const logTimestamp = new Date();
+  
+  logSheet.appendRow([
+    nextSerialNo,
+    logTimestamp,
+    name,
+    country,
+    state,
+    status
+  ]);
 }
 
 
-// // Error message
-// function showError(text) {
-//     message.textContent = text;
-//     message.className = "error";
-//     tableContainer.innerHTML = "";
-// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
