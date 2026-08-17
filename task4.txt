@@ -60,4 +60,232 @@ function onFormSubmit(e) {
 
 
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV File Preview</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <div class="container">
+        <h1>CSV File Preview</h1>
+        <div id="dropArea" class="drop-area">
+            <p>Drag & Drop your CSV file here</p>
+            <p>or</p>
+            <label for="csvFile" class="choose-btn">
+                Choose CSV File
+            </label>
+            <input type="file" id="csvFile" accept=".csv">
+        </div>
+        <div id="message"></div>
+        <div id="tableContainer"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.drop-area {
+    border: 3px dashed #777;
+    border-radius: 12px;
+    padding: 50px;
+    text-align: center;
+    background: white;
+    transition: 0.3s;
+}
+
+.drop-area.dragover {
+    border-color: #2563eb;
+    background: #eef4ff;
+}
+
+.drop-area p {
+    font-size: 18px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.choose-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #2563eb;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.choose-btn:hover {
+    background: #1d4ed8;
+}
+
+#message {
+    margin: 20px 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.error {
+    color: #dc2626;
+}
+
+.success {
+    color: #29eb43;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    background: white;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #2563eb;
+    color: white;
+    padding: 12px;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+const dropArea = document.getElementById("dropArea");
+const fileInput = document.getElementById("csvFile");
+const message = document.getElementById("message");
+const tableContainer = document.getElementById("tableContainer");
+
+fileInput.addEventListener("change", function () {
+    const file = fileInput.files[0];
+
+    if (file) {
+        processFile(file);
+    }
+});
+
+dropArea.addEventListener("click", function () {
+    fileInput.click();
+});
+
+dropArea.addEventListener("dragover", function (event) {
+    event.preventDefault();
+    dropArea.classList.add("dragover");
+});
+
+dropArea.addEventListener("dragleave", function () {
+    dropArea.classList.remove("dragover");
+});
+
+dropArea.addEventListener("drop", function (event) {
+    event.preventDefault();
+
+    dropArea.classList.remove("dragover");
+
+    const file = event.dataTransfer.files[0];
+
+     if (file) {
+         processFile(file);
+     }
+});
+
+ function processFile(file) {
+
+    if (!file.name.toLowerCase().endsWith(".csv")) {
+        showError("Please select a valid CSV file.");
+        return;
+    }
+
+const reader = new FileReader();
+
+    reader.onload = e => {
+        const rows = parseCSV(e.target.result);
+
+        if (!rows.length) return showError("The CSV file is empty.");
+
+        message.textContent = "CSV uploaded successfully!";
+        message.className = "success";
+
+        renderTable(rows.slice(0, 21));
+};
+    reader.onerror = () => showError("Unable to read the file.");
+    reader.readAsText(file);
+};
+
+function parseCSV(text) {
+    const rows = [];
+    const lines = text.split("\n");
+
+    for (let line of lines) {
+        line = line.trim();
+
+        if (line === "") continue;
+
+        const row = line.split(",");
+        rows.push(row);
+    }
+    return rows;
+}
+
+function renderTable(rows) { 
+    tableContainer.innerHTML = `
+    <table> 
+        <thead> <tr>${rows[0].map(h => `<th>${h}</th>`).join("")}</tr> 
+        </thead> 
+        <tbody> ${rows.slice(1).map(row => `<tr>${row.map(cell =>`<td>${cell}</td>`).join("")}</tr>`).join("")} 
+        </tbody> 
+        </table>`; 
+};
