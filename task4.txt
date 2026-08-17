@@ -3,286 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>10 Tips to Improve Your Website SEO</title>
-    <meta name="description" content="Learn 10 practical tips to improve your website SEO and increase organic traffic.">
+    <title>CSV File Uploader</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <article>
+    <div class="container">
 
-        <h1>10 Tips to Improve Your Website SEO</h1>
-
-        <p>
-            Published on August 12, 2026 by John Doe
+        <h1>CSV File Uploader</h1>
+        <p class="description">
+            Upload a CSV file to preview its first 20 rows.
         </p>
 
-        <img 
-            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f"
-            alt="Website SEO analytics"
-            width="800"
-        >
+        <div class="upload-box">
+            <input type="file" id="csvFile" accept=".csv">
+            <button id="uploadBtn">Upload CSV</button>
+        </div>
 
-        <p>
-            Search engine optimization is important for improving
-            the visibility of a website in search engines.
-        </p>
+        <div id="message"></div>
 
-        <h2>1. Create Quality Content</h2>
+        <div id="tableContainer"></div>
 
-        <p>
-            Creating useful and relevant content helps users find
-            the information they need.
-        </p>
+    </div>
 
-        <h2>2. Optimize Your Page Titles</h2>
-
-        <p>
-            A clear and descriptive page title helps search engines
-            understand the topic of your page.
-        </p>
-
-        <h2>3. Improve Website Speed</h2>
-
-        <p>
-            A fast website provides a better experience for visitors.
-        </p>
-
-    </article>
-
+    <script src="script.js"></script>
 </body>
 </html>
 
-Blog page
 
-Inside head tag copy it
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
 
-  "headline": "10 Tips to Improve Your Website SEO",
 
-  "description": "Learn 10 practical tips to improve your website SEO and increase organic traffic.",
 
-  "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
 
-  "author": {
-    "@type": "Person",
-    "name": "John Doe",
-    "url": "https://example.com/author/john-doe"
-  },
 
-  "publisher": {
-    "@type": "Organization",
-    "name": "My Blog",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://example.com/logo.png"
+
+
+
+
+
+
+
+
+
+const fileInput = document.getElementById("csvFile");
+const uploadBtn = document.getElementById("uploadBtn");
+const message = document.getElementById("message");
+const tableContainer = document.getElementById("tableContainer");
+
+uploadBtn.onclick = () => {
+    const file = fileInput.files[0];
+
+    if (!file) return showError("Please select a file first.");
+    if (!file.name.toLowerCase().endsWith(".csv"))
+        return showError("Please upload a CSV file.");
+
+    const reader = new FileReader();
+
+    reader.onload = e => {
+        const rows = parseCSV(e.target.result);
+
+        if (!rows.length) return showError("The CSV file is empty.");
+
+        message.textContent = "CSV uploaded successfully!";
+        message.className = "success";
+
+        renderTable(rows.slice(0, 20));
+    };
+
+    reader.onerror = () => showError("Unable to read the file.");
+    reader.readAsText(file);
+};
+
+
+// Manual CSV parser
+ function parseCSV(text) {
+    const rows = [];
+
+    const lines = text.split("\n");
+
+    for (let line of lines) {
+        line = line.trim();
+
+        if (line === "") continue;
+
+        const row = line.split(",");
+        rows.push(row);
     }
-  },
 
-  "datePublished": "2026-08-12T00:00:00+05:30",
-
-  "dateModified": "2026-08-12T00:00:00+05:30",
-
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://example.com/blog/seo-tips"
-  }
+    return rows;
 }
-</script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>iPhone 15 - Product Page</title>
-
-    <!-- Product JSON-LD -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Product",
-
-      "name": "iPhone 15",
-      "image": "https://example.com/iphone15.jpg",
-      "description": "Apple iPhone 15",
-
-      "brand": {
-        "@type": "Brand",
-        "name": "Apple"
-      },
-
-      "review": {
-        "@type": "Review",
-        "author": {
-          "@type": "Person",
-          "name": "John Smith"
-        },
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "5"
-        },
-        "reviewBody": "Excellent product with great performance and camera."
-      },
-
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.5",
-        "reviewCount": "120"
-      },
-
-      "offers": {
-        "@type": "Offer",
-        "price": "60000",
-        "priceCurrency": "INR",
-        "availability": "https://schema.org/InStock",
-
-        "hasMerchantReturnPolicy": {
-          "@type": "MerchantReturnPolicy",
-          "applicableCountry": "IN",
-          "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-          "merchantReturnDays": "30",
-          "returnMethod": "https://schema.org/ReturnByMail",
-          "returnFees": "https://schema.org/FreeReturn"
-        },
-
-        "shippingDetails": {
-          "@type": "OfferShippingDetails",
-
-          "shippingRate": {
-            "@type": "MonetaryAmount",
-            "value": "0",
-            "currency": "INR"
-          },
-
-          "shippingDestination": {
-            "@type": "DefinedRegion",
-            "addressCountry": "IN"
-          },
-
-          "deliveryTime": {
-            "@type": "ShippingDeliveryTime",
-
-            "handlingTime": {
-              "@type": "QuantitativeValue",
-              "minValue": "0",
-              "maxValue": "1",
-              "unitCode": "DAY"
-            },
-
-            "transitTime": {
-              "@type": "QuantitativeValue",
-              "minValue": "2",
-              "maxValue": "5",
-              "unitCode": "DAY"
-            }
-          }
-        }
-      }
-    }
-    </script>
-</head>
-
-<body>
-
-    <main>
-        <h1>iPhone 15</h1>
-
-        <img
-            src="https://example.com/iphone15.jpg"
-            alt="iPhone 15"
-        >
-
-        <p>Apple iPhone 15</p>
-
-        <p>Price: ₹60,000</p>
-
-        <p>Availability: In Stock</p>
-
-        <p>Rating: 4.5/5 (120 reviews)</p>
-
-        <p>Free shipping</p>
-
-        <p>Delivery: 2–5 days</p>
-
-        <p>30-day free returns</p>
-
-        <button id="addToCart" type="button">
-            Add to Cart
-        </button>
-
-        <p id="cartMessage" aria-live="polite"></p>
-    </main>
-
-    <!-- Normal JavaScript -->
-    <script>
-        const addToCartButton = document.getElementById("addToCart");
-        const cartMessage = document.getElementById("cartMessage");
-
-        addToCartButton.addEventListener("click", () => {
-            cartMessage.textContent = "iPhone 15 added to cart!";
-        });
-    </script>
-
-</body>
-
-</html>
+// Create table
+function renderTable(rows) {
+    tableContainer.innerHTML = `
+        <table>
+            <thead>
+                <tr>${rows[0].map(h => `<th>${h}</th>`).join("")}</tr>
+            </thead>
+            <tbody>
+                ${rows.slice(1).map(row =>
+                    `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`
+                ).join("")}
+            </tbody>
+        </table>`;
+}
+
+
+// // Error message
+// function showError(text) {
+//     message.textContent = text;
+//     message.className = "error";
+//     tableContainer.innerHTML = "";
+// }
