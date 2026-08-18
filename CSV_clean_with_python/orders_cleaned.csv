@@ -1,0 +1,4 @@
+Order_Id,Customer_Name,Customer_Email,Product_Category,Quantity,Unit_Price,Order_date
+ORD-2001,Aman Sharma,aman.sharma@gmail.com,Electronics,2.0,1499.99,2026-05-01
+ORD-2003,Rahul Verma,rahul.verma@gmail.com,Home & Kitchen,1.0,2499.0,2026-07-01
+ORD-2006,Simran Kaur,simran.kaur@gmail.com,Clothing,2.0,1299.0,2026-10-01
