@@ -1,0 +1,21 @@
+Order_Id,Customer_Name,Customer_Email,Product_Category,Quantity,Unit_Price,Order_date
+ORD-2001,Aman Sharma,aman.sharma@gmail.com,Electronics,2,1499.99,2026-01-05
+ORD-2002,Priya Singh,priya.singh@gmail.com,Clothing,3,799.50,05/01/2026
+ORD-2003,Rahul Verma,rahul.verma@gmail.com,Home & Kitchen,1,2499,2026-01-07
+ORD-2004,Neha Kapoor,neha.kaporgmail.com,Beauty,2,599.00,2026/01/08
+ORD-2005,Rohit Kumar,,Electronics,5,299,Jan 09 2026
+ORD-2006,Simran Kaur,simran.kaur@gmail.com,Clothing,2,1299,2026-01-10
+ORD-2007,Vikas,vikas@gmail.com,Grocery,4,"1,250",10-01-2026
+ORD-2008,Anjali Mehta,anjali.mehta@gmail.com,Electronics,two,899.99,2026-01-12
+ORD-2009,Karan Malhotra,karan.malhotra@gmail.com,Sports,2,1599,2026-01-13
+ORD-2010,Pooja Gupta,pooja.gupta@gmail.com,Beauty,1,499.00,2026-01-14
+ORD-2011,Arjun Patel,arjun.patel@gmail.com,Furniture,1,7999,2026-01-15
+ORD-2012,Meena Joshi,meena.joshi@gmail,Beauty,3,850,2026-01-16
+ORD-2013,Sahil Bhatia,sahil.bhatia@gmail.com,Grocery,2,350.75,2026-01-17
+ORD-2014,Nisha,nisha@gmail.com,Clothing,1,999,16/01/26
+ORD-2015,Deepak Singh,deepak.singh@gmail.com,Electronics,2,1999,2026-01-18
+ORD-2015,Deepak Singh,deepak.singh@gmail.com,Electronics,2,1999,2026-01-18
+ORD-2017,Kavita Rani,kavita.rani@gmail.com,Home & Kitchen,3,1299.50,not-a-date
+ORD-2018,Harish Kumar,harish.kumar@gmail.com,Toys,1,450,2026-01-20
+ORD-2019,Riya,riya@gmail.com,Electronics,4,1099,2026-01-21
+ORD-2020,Mohit Saini,mohit.saini@gmail.com,Clothing,2,899,2026-01-22
