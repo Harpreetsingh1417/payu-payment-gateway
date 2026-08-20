@@ -1,72 +1,65 @@
-const fs = require("fs");
+// import re
 
-const logData = fs.readFileSync("access.log", "utf8");
+// log_file = "access_errors.log"
 
-const lines = logData.split("\n");
+// count_4xx = 0
+// count_5xx = 0
 
-let count200 = 0;
-let count500 = 0;
+// with open(log_file, "r") as file:
+//     for line in file:
+//         match = re.search(r'" (\d{3}) ', line)
 
-for (let line of lines) {
+//         if match:
+//             status_code = match.group(1)
 
-    if (line.includes(" 200")) {
-        count200++;
-    }
+//             if status_code.startswith("4"):
+//                 count_4xx += 1
 
-    if (line.includes(" 500")) {
-        count500++;
-    }
-}
+//             elif status_code.startswith("5"):
+//                 count_5xx += 1
 
-const summary = {
-    totalRequests: count200 + count500,
-    statusCodes: {
-        "200": count200,
-        "500": count500
-    }
-};
+// print("Total 4xx errors:", count_4xx)
+// print("Total 5xx errors:", count_5xx)
+// print("Total errors:", count_4xx + count_5xx)
 
-fs.writeFileSync(
-    "summary.json",
-    JSON.stringify(summary, null, 2)
-);
 
-console.log("HTTP 200:", count200);
-console.log("HTTP 500:", count500);
-console.log("Summary saved to summary.json");
+// create a .env and put: 
+// API_KEY=mock_api_key_123
+// API_SECRET=mock_secret_456
+
+// create a .gitignore and put:
+// .env
+// venv/
+// __pycache__/
 
 
 
-// create a summary.json
+// import os
+// from dotenv import load_dotenv
 
-// in main dir, open terminal run 
-// 1). cd .. 
-// 2). npx create-next-app@latest log-dashboard
-// 3). cd log-dashboard
-// 4). npm run dev 
-// 5). in lo-dashboard open app->page.js 
-// 6). copy summary.json to log-dashboard folder
+// load_dotenv()
 
-// put the code in page.js
-import fs from "fs";
-import path from "path";
+// api_key = os.getenv("API_KEY")
+// api_secret = os.getenv("API_SECRET")
 
-export default function Home() {
-  const filePath = path.join(process.cwd(), "summary.json");
+// count_4xx = 0
+// count_5xx = 0
 
-  const fileData = fs.readFileSync(filePath, "utf8");
+// with open("access_errors.log", "r") as file:
+//     for line in file:
+//         parts = line.split()
 
-  const summary = JSON.parse(fileData);
+//         try:
+//             status_code = int(parts[-1])
+//         except (ValueError, IndexError):
+//             continue
 
-  return (
-    <main>
-      <h1>Server Log Dashboard</h1>
+//         if 400 <= status_code <= 499:
+//             count_4xx += 1
 
-      <p>Total Requests: {summary.totalRequests}</p>
+//         elif 500 <= status_code <= 599:
+//             count_5xx += 1
 
-      <p>HTTP 200: {summary.statusCodes["200"]}</p>
-
-      <p>HTTP 500: {summary.statusCodes["500"]}</p>
-    </main>
-  );
-}
+// print("Error Summary")
+// print("Total 4xx errors:", count_4xx)
+// print("Total 5xx errors:", count_5xx)
