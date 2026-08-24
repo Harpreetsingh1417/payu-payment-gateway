@@ -1,0 +1,27 @@
+function onEdit(e) {
+
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getActiveSheet();
+
+  var row = e.range.getRow();
+
+  // Skip header row
+  if (row === 1) return;
+
+  // Get 3 columns from the edited row
+  var data = sheet.getRange(row, 1, 1, 3).getValues()[0];
+
+  var headers = sheet.getRange(1, 1, 1, 3).getValues()[0];
+
+  var emailBody =
+    "A change was made in the Google Sheet.\n\n" +
+    headers[0] + ": " + data[0] + "\n" +
+    headers[1] + ": " + data[1] + "\n" +
+    headers[2] + ": " + data[2];
+
+  GmailApp.sendEmail(
+    "hhharysingh1122@gmail.com",
+    "Google Sheet Row Updated",
+    emailBody
+  );
+}
