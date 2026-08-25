@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CSV Preview</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>CSV File Preview</h1>
+
+        <div id="dropZone" class="drop-zone">
+
+            <div class="upload-icon">📁</div>
+
+            <h2>Drag & Drop CSV File Here</h2>
+
+            <p>or</p>
+
+            <button id="browseButton" type="button">
+                Browse File
+            </button>
+
+            <p class="file-info">
+                Select a CSV file to preview
+            </p>
+
+            <input type="file" id="fileInput" hidden>
+
+        </div>
+
+        <p id="fileName"></p>
+
+        <div id="previewContainer" class="preview-container">
+
+            <h2>CSV Preview</h2>
+
+            <div class="table-container">
+                <table id="csvTable"></table>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    min-height: 100vh;
+    padding: 40px;
+}
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+
+/* Drop Zone */
+
+.drop-zone {
+    padding: 50px 30px;
+    border: 3px dashed #888;
+    border-radius: 15px;
+    background: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+    border-color: #333;
+    background: #e9e9e9;
+}
+
+.upload-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.drop-zone h2 {
+    margin-bottom: 10px;
+}
+
+.drop-zone p {
+    margin: 10px 0;
+}
+
+
+/* Browse Button */
+
+#browseButton {
+    padding: 12px 25px;
+    border: 0;
+    border-radius: 8px;
+    background: #222;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#browseButton:hover {
+    background: #444;
+}
+
+
+/* File Name */
+
+#fileName {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+
+/* Preview */
+
+.preview-container {
+    display: none;
+    margin-top: 40px;
+    padding: 25px;
+    background: white;
+    border-radius: 10px;
+}
+
+.preview-container h2 {
+    margin-bottom: 20px;
+}
+
+
+/* Table */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#csvTable {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+#csvTable th,
+#csvTable td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+#csvTable th {
+    background: #eee;
+}
+
+#csvTable tr:nth-child(even) {
+    background: #f8f8f8;
+}

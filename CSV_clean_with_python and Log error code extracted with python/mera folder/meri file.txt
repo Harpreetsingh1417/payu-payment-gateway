@@ -1,66 +1,18 @@
-"lower() is used to normalize the capitalization of the search term, while split() is used to separate the normalized search term into individual words. We need split() because in the next step we have to count the frequency of each individual word."
+function onEdit(e) {
+  const sheet = e.source.getActiveSheet();
+  const lastRow = sheet.getLastRow();
+  const lastColumn = sheet.getLastColumn();
 
+  const headers = sheet.getRange(1, 1, 1, lastColumn).getValues()[0];
+  const values = sheet.getRange(lastRow, 1, 1, lastColumn).getValues()[0];
 
+  const body = headers.map((header, i) =>
+    `${header}: ${values[i]}`
+  ).join("\n");
 
-
-
-
-
-
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# Load CSV file
-df = pd.read_csv("sales_data.csv")
-
-# Convert date column to datetime
-df["date"] = pd.to_datetime(df["date"])
-
-# Sort by date
-df = df.sort_values("date")
-
-# Calculate 7-day moving average
-df["moving_average"] = df["revenue"].rolling(window=7).mean()
-
-# Create figure
-plt.figure(figsize=(12, 6))
-
-# Plot daily revenue
-plt.plot(
-    df["date"],
-    df["revenue"],
-    marker="o",
-    label="Daily Revenue"
-)
-
-# Plot 7-day moving average
-plt.plot(
-    df["date"],
-    df["moving_average"],
-    marker="o",
-    label="7-Day Moving Average"
-)
-
-# Title and labels
-plt.title("Daily Revenue and 7-Day Moving Average")
-plt.xlabel("Date")
-plt.ylabel("Revenue")
-
-# Show EVERY date on x-axis
-plt.xticks(
-    df["date"],
-    df["date"].dt.strftime("%d-%b"),
-    rotation=45
-)
-
-# Add grid
-plt.grid(True)
-
-# Show legend
-plt.legend()
-
-# Adjust spacing
-plt.tight_layout()
-
-# Display graph
-plt.show()
+  GmailApp.sendEmail(
+    "gurkamal964@gmail.com",
+    "Latest Row Updated",
+    body
+  );
+}
