@@ -1,18 +1,12 @@
-function onEdit(e) {
-  const sheet = e.source.getActiveSheet();
-  const lastRow = sheet.getLastRow();
-  const lastColumn = sheet.getLastColumn();
+function onFormSubmit(e) {
+  const ss = SpreadsheetApp.getActive();
+  const sheet = ss.getSheetByName("Log") || ss.insertSheet("Log");
+  const data = e.values.slice(1);
 
-  const headers = sheet.getRange(1, 1, 1, lastColumn).getValues()[0];
-  const values = sheet.getRange(lastRow, 1, 1, lastColumn).getValues()[0];
+  if (sheet.getLastRow() === 0)
+    sheet.appendRow(["Sr. No.", "Timestamp", ...e.range.getSheet().getRange(1, 2, 1, data.length).getValues()[0]]);
 
-  const body = headers.map((header, i) =>
-    `${header}: ${values[i]}`
-  ).join("\n");
+  const missing = data.some(x => !x.trim()) ? "Missing" : "";
 
-  GmailApp.sendEmail(
-    "gurkamal964@gmail.com",
-    "Latest Row Updated",
-    body
-  );
+  sheet.appendRow([sheet.getLastRow(), new Date(), ...data, missing]);
 }
